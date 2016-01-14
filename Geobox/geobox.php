@@ -4,7 +4,7 @@
     This script adds support for gps coordinates conversion and displaying at maps
     - add (:geo [args] coords :) tag functionality
 
-    Copyright 2006-2011 Anomen (ludek_h@seznam.cz)
+    Copyright 2006-2016 Anomen (ludek_h@seznam.cz)
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
     by the Free Software Foundation; either version 2 of the License, or
@@ -15,11 +15,16 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2012-09-07';
+$RecipeInfo['Geobox']['Version'] = '2016-01-13';
 
 
-Markup('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/e',
+if (function_exists('Markup_e')) {
+  Markup_e('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/',
+    "geobox_maps(strtolower(\$m[1]),\$m[2])");
+} else {
+  Markup('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/e',
     "geobox_maps(strtolower('$1'),'$2')");
+}
 
 SDV($GeoBoxDefaultFormat,'dm');
 
@@ -96,15 +101,16 @@ function geobox_parse_coords($coords)
 	$res['result'] = "";
     }    
     
-    $res[0] = abs(geobox_asint($m, 3)) + geobox_asint($m, 4)/60 + geobox_asint($m, 5)/(60*60);
-    $res[1] = abs(geobox_asint($m, 8)) + geobox_asint($m, 9)/60 + geobox_asint($m, 10)/(60*60);
+    if (isset($m)) {
+        $res[0] = abs(geobox_asint($m, 3)) + geobox_asint($m, 4)/60 + geobox_asint($m, 5)/(60*60);
+        $res[1] = abs(geobox_asint($m, 8)) + geobox_asint($m, 9)/60 + geobox_asint($m, 10)/(60*60);
 
-    if (geobox_asint($m, 3) < 0) { $res[0] = -$res[0]; }
-    if (geobox_asint($m, 8) < 0) { $res[1] = -$res[1]; }
+        if (geobox_asint($m, 3) < 0) { $res[0] = -$res[0]; }
+        if (geobox_asint($m, 8) < 0) { $res[1] = -$res[1]; }
 
-    if (strtoupper($m[1]) == 'S') { $res[0] = -$res[0]; }
-    if (strtoupper($m[6]) == 'W') { $res[1] = -$res[1]; }
-
+        if (strtoupper($m[1]) == 'S') { $res[0] = -$res[0]; }
+        if (strtoupper($m[6]) == 'W') { $res[1] = -$res[1]; }
+    }
         
     return $res;
 }
