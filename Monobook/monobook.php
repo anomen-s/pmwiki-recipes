@@ -144,9 +144,15 @@ function RenderSidePart($pagename, $params) {
 # (:notabs:) => remove tabs above page content
 # (:noprint:) => remove print action link
 #
-Markup('noleft', 'directives', '/\\(:noleft:\\)/ei', "NoLeftBar()");
-Markup('nosidebar', 'directives', '/\\(:nosidebar:\\)/ei', "NoLeftBar()");
-Markup('notabs', 'directives', '/\\(:no(action|tab)s?:\\)/ei', "NoTabs()");
+if (function_exists('Markup_e')) {
+ Markup_e('noleft', 'directives', '/\\(:noleft:\\)/i', "NoLeftBar()");
+ Markup_e('nosidebar', 'directives', '/\\(:nosidebar:\\)/i', "NoLeftBar()");
+ Markup_e('notabs', 'directives', '/\\(:no(action|tab)s?:\\)/i', "NoTabs()");
+} else {
+ Markup('noleft', 'directives', '/\\(:noleft:\\)/ei', "NoLeftBar()");
+ Markup('nosidebar', 'directives', '/\\(:nosidebar:\\)/ei', "NoLeftBar()");
+ Markup('notabs', 'directives', '/\\(:no(action|tab)s?:\\)/ei', "NoTabs()");
+}
 
 function NoLeftBar() {
   global $SkinPartFmt;
@@ -207,8 +213,16 @@ else
   $RightBarClass = isset($PageRightBarList[$rb]) ? $PageRightBarList[$rb] : $PageRightBarList[$DefaultRightBar];
 
   global $action;
-  Markup('noright', 'directives', '/\\(:noright:\\)/e',
-    "SetTmplDisplay('PageRightFmt', 0)");
-  Markup('showright', 'directives', '/\\(:showright:\\)/e',
+  if (function_exists('Markup_e')) {
+    Markup_e('noright', 'directives', '/\\(:noright:\\)/',
+      "SetTmplDisplay('PageRightFmt', 0)");
+    Markup_e('showright', 'directives', '/\\(:showright:\\)/',
      ($action != 'browse') ? "" : "SetTmplDisplay('PageRightFmt', 1)");
+  } else {
+    Markup('noright', 'directives', '/\\(:noright:\\)/e',
+      "SetTmplDisplay('PageRightFmt', 0)");
+    Markup('showright', 'directives', '/\\(:showright:\\)/e',
+       ($action != 'browse') ? "" : "SetTmplDisplay('PageRightFmt', 1)");
+  }
+
 }
