@@ -24,10 +24,13 @@
 
 */
 
-$RecipeInfo['RSSDisplay']['Version'] = '2014-07-23';
+$RecipeInfo['RSSDisplay']['Version'] = '2016-01-14';
 
-Markup('rssdisplay', 'fulltext', '/\(:RSS\s*(.*?)\s*:\)/e',"MagpieRSS('\$1')");
-
+if (function_exists('Markup_e')) {
+  Markup_e('rssdisplay', 'fulltext', '/\(:RSS\s*(.*?)\s*:\)/',"MagpieRSS(\$m[1])");
+} else {
+  Markup('rssdisplay', 'fulltext', '/\(:RSS\s*(.*?)\s*:\)/e',"MagpieRSS('\$1')");
+}
 
 SDV($MagpieDir, "$FarmD/cookbook/magpie");
 SDV($MagpieDebug, false);
