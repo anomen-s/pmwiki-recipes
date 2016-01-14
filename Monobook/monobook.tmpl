@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!-- monobook/monobook.tmpl
+See PHP for credits and license
+-->
+<head>
+  <title><!--function:RenderTitle--></title>
+  <meta http-equiv='Content-Style-Type' content='text/css' />
+  <!--HTMLHeader-->
+  <!-- <link rel='stylesheet' href='$SkinDirUrl/monobook.css' type='text/css'/> -->
+<!--function:RenderStyle leftbardisabled-->
+<!--function:RenderStyle ! tabsdisabled-->
+</head>
+<body><a name='monobook_topofpage'></a>
+  <div id='globalwrapper'>
+    <!--PageLeftFmt--><div id='pageleft'>
+      <div id='pageleftcontent'>
+        <div class='pageleftbodycaption'><!--function:RenderPart sidebar_title--></div>
+        <div class='pageleftbody' id='sidebar'>
+          <!--wiki:$Group.SideBar $SiteGroup.SideBar-->
+        </div><!-- id='sidebar' -->
+        <div class='pageleftbodycaption'><!--function:RenderPart search_title--></div>
+        <div class='pageleftbody' id='sidesearch'>
+          <form name='searchform' action='{$ScriptUrl}/$[{$SiteGroup}/Search]'>
+            <input type='hidden' name='pagename' value='$[{$SiteGroup}/Search]'/>
+            <input class='searchbox' type='text' name='q' value=''/>
+            <div  class='searchbutton'><input class='searchbutton' type='submit' value='$[Go]'/></div>
+          </form>
+        </div><!-- id='sidesearch' -->
+        <!--function:RenderSidePart pageleftbodycaption pageleftbody sidenote {$FullName}-SideNote {$Group}.SideNote {$SiteGroup}.SideNote-->
+      </div><!-- id='pageleft_content' -->
+      <div id='pagelogo'>
+        <a style='background-image: url($PageLogoUrl);'
+           href='{$ScriptUrl}' title="<!--function:RenderTitle-->"></a>
+      </div><!-- id='pagelogo' -->
+    </div><!--/PageLeftFmt-->
+    <a name='topcontent'></a>
+    <div id='content'>
+      <!--PageHeaderFmt--><div id='header'></div><!--/PageHeaderFmt-->
+      <!--PageTabsFmt--><div id='tabs'>
+      <!--function:RenderActions {$Group}.PageActions {$SiteGroup}.PageActions-->
+      </div><!--/PageTabsFmt-->
+      <div id='tabpage'>
+        <div id='contentbody'>
+          <!--PageTitleFmt--><h1 class='titlepage'><!--function:RenderPart title--></h1><!--/PageTitleFmt-->
+          <div id='rightbody'>
+            <!--PageRightFmt--><div id='rightbar' class='$RightBarClass'><!--wiki:{$Group}.RightBar {$SiteGroup}.RightBar--></div><!--/PageRightFmt-->
+          </div><!-- id='rightbody' -->
+            <!--PageText-->
+            <span style='clear:both;'></span>
+        </div><!-- id='contentbody' -->
+      </div><!-- id='tabpage' -->
+      <!--PageFooterFmt--><div id='footer'>
+          <!--function:RenderPart footer-->
+      </div><!--/PageFooterFmt-->
+    </div><!-- id='content' -->
+<!--HTMLFooter-->
+  </div><!-- id='globalwrapper' -->
+</body>
+</html>
