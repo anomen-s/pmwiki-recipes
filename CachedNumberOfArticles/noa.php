@@ -12,10 +12,15 @@
     (at your option) any later version.
 */
 
-$RecipeInfo['CachedNumberOfArticles']['Version'] = '2011-10-13';
+$RecipeInfo['CachedNumberOfArticles']['Version'] = '2016-01-13';
 
-Markup('numberofarticles','inline','/\(:numberofarticles(\s+refresh)?\s*:\)/e',
+if (function_exists('Markup_e')) {
+  Markup_e('numberofarticles','inline','/\(:numberofarticles(\s+refresh)?\s*:\)/',
+    "Keep(getNumArticles(\$m[1]))");
+} else {
+  Markup('numberofarticles','inline','/\(:numberofarticles(\s+refresh)?\s*:\)/e',
     "Keep(getNumArticles('$1'))");
+}
 
 $NOAFile = "$WorkDir/.noa";
 
