@@ -27,7 +27,7 @@
 #
 # See http://www.pmwiki.org/wiki/Cookbook/MonobookSkin for info.
 #
-$RecipeInfo['MonobookSkin']['Version'] = '2009-02-23';
+$RecipeInfo['MonobookSkin']['Version'] = '2016-01-14';
 
 # Skin Parts handling
 global $SkinPartFmt, $WikiTitle;
