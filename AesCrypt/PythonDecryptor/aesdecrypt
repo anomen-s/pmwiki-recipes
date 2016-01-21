@@ -1,0 +1,121 @@
+#!/usr/bin/python3
+
+import sys
+import hashlib
+import re
+import argparse
+import base64
+from getpass import getpass
+
+from Crypto.Util import Counter
+from Crypto.Cipher import AES
+
+__version__ = '1.0'
+ENCODING='UTF-8'
+
+def parseArguments():
+
+    parser = argparse.ArgumentParser(description='PmWiki page AES decrypter %s' % __version__)
+    parser.add_argument('-p', '--password', dest='pw', default=None,
+             help='Password (use with caution!, password might be visible in process list and in shell history)')
+    parser.add_argument('-k', '--kdf', default='sha256_dup',
+             help='Select KDF function (sha256, sha256_dup, aes, pbkdf2)')
+
+    parser.add_argument('files', nargs='+',  help='Input files', metavar='file')
+
+    args = parser.parse_args()
+
+    return args;
+
+def readfile(name):
+    with open(name,'rt') as f:
+      data = f.read()
+
+    return data
+
+def fromB64(data):
+  if (type(data) == str):
+    data = bytes(data, ENCODING)
+  b64=base64.b64decode(data)
+  return b64
+
+def toBytes(data):
+  data = bytes(data, ENCODING)
+  return data
+
+def toStr(data):
+  data = str(data, ENCODING)
+  return data
+
+
+def kdf_aes(password, nonce):
+    raise Exception('Not yet implemented')
+
+def kdf_sha256(password, nonce):
+   m = hashlib.sha256()
+   m.update(password)
+   nBytes = 256//8
+   return m.digest()[:nBytes];
+
+def kdf_sha256_dup(password, nonce):
+   m = hashlib.sha256()
+   nBytes = 256//8
+   nonceEnc = base64.b64encode(nonce);
+   for i in range(nBytes):
+     m.update(toBytes(str(i)))
+     im = i % len(password)
+     m.update(password[im:im+1])
+     m.update(password)
+     m.update(nonceEnc)
+   
+   return m.digest()[:nBytes];
+
+
+def kdf_pbkdf2(password, nonce):
+    raise Exception('Not yet implemented')
+
+def decrypt(text, pw, kdf):
+
+    nonce = text[:8]
+    cipher = text[8:]
+    key = kdf(pw, nonce)
+    ctr = Counter.new(64, prefix=nonce, initial_value=0)
+    aes = AES.new(key, AES.MODE_CTR, counter=ctr)
+    return aes.decrypt(cipher)
+
+def decryptfile(pw, fileName, kdf):
+    text = readfile(fileName)
+    
+    pattern = re.compile(r'\(:aes\s+([+/a-z0-9]+=*)\s*:\)', re.IGNORECASE)
+    matches = pattern.findall(text)
+
+    for m in matches:
+      try:
+       plain = decrypt(base64.b64decode(toBytes(m)), pw, kdf)
+       print(toStr(plain))
+      except Exception as e:
+        print(e)
+
+
+    
+def main():
+    args = parseArguments()
+    
+    pw = args.pw
+    if not pw:
+      pw = getpass()
+
+    if args.kdf == 'aes':
+      kdf = kdf_sha256
+    if args.kdf == 'sha256':
+      kdf = kdf_sha256
+    if args.kdf == 'sha256_dup':
+      kdf = kdf_sha256_dup
+    if args.kdf == 'pbkdf2':
+      kdf = kdf_pbkdf2
+    
+    for f in args.files:
+      decryptfile(toBytes(pw), f, kdf)
+    
+if __name__ =='__main__':
+  main()
