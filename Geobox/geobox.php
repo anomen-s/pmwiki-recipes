@@ -15,7 +15,7 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2016-01-13';
+$RecipeInfo['Geobox']['Version'] = '2016-10-12';
 
 
 if (function_exists('Markup_e')) {
@@ -30,7 +30,8 @@ SDV($GeoBoxDefaultFormat,'dm');
 
 SDVA($GeoBoxLinks, array(
  'maps.google.com'=>'http://maps.google.com/?q=$N%20$E',
- 'mapy.cz'=>'http://www.mapy.cz/?query=$N$LAT%20$E$LON',
+// 'mapy.cz'=>'https://www.mapy.cz/zakladni?x=$E&amp;y=$N&amp;z=17&amp;source=coor&amp;id=$E%2C$N',
+ 'mapy.cz'=>'https://www.mapy.cz/?st=search&fr=$N+$E',
  'geocaching.com/maps'=>'http://www.geocaching.com/map/default.aspx?lat=$N&amp;lng=$E',
  'geocaching.com/near'=>'http://www.geocaching.com/seek/nearest.aspx?lat=$N&amp;lng=$E&amp;f=1'
 ));
@@ -85,12 +86,15 @@ function geobox_parse_coords($coords)
 		    )
 		)
 	    )?";
-    $regex_pre = "(N|S|)\s*(${re_coord})\s*;?\s*(E|W|)\s*(${re_coord})";
-    $regex_post = "()(${re_coord})\s*(N|S)\s*\;?s*(${re_coord})\s*(E|W)";
+    $regex_pre = "(N|S|)\s*(${re_coord})\s*;?\s*([,;]?\s*E|[,;]?\s*W|)\s*(${re_coord})";
+    $regex_post = "()(${re_coord})\s*(N|S)\s*[,;]?\s*(${re_coord})\s*(E|W)";
     $m[] = array();
     if (preg_match("/^\s*${regex_pre}\s*\$/xi", $coords, $m)) {
 	$res['result'] = 'PRE';
 	$res['pattern'] = $regex_pre;
+	if(strlen($m[6]) > 1) {
+	  $m[6] = substr($m[6], -1);
+	}
     }
     else if (preg_match("/^\s*${regex_post}\s*\$/xi", $coords, $m)) {
 	$res['result'] = 'POST';
@@ -138,8 +142,8 @@ function geobox_atan2($y, $x)
 
 function geobox_convert_coords($c)
 {
-    $c['LAT'] = ($c[0] > 0) ? "N" : "S";
-    $c['LON'] = ($c[1] > 0) ? "E" : "W";
+    $c['LAT'] = ($c[0] >= 0) ? "N" : "S";
+    $c['LON'] = ($c[1] >= 0) ? "E" : "W";
     
     $c['NSig'] = geobox_sign($c[0]);
     $c['ESig'] = geobox_sign($c[1]);
