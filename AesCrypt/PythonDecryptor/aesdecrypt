@@ -92,6 +92,8 @@ def decryptfile(pw, fileName, kdf):
     for m in matches:
       try:
        plain = decrypt(base64.b64decode(toBytes(m)), pw, kdf)
+       if plain[-1] != 0x20:
+         raise Exception('Cannot decrypt. Invalid mode or password.')
        print(toStr(plain))
       except Exception as e:
         print(e)
