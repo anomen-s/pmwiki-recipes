@@ -48,6 +48,7 @@ Possible values and meanings are:
 : D : deg°
 : M : deg°min'
 : S : deg°min'sec"
+: G : N/W/E/S deg°min'
 
 For example, following line will produce coordinates displayed as degrees:
 [@ (:geo format=d 49°43.996 14°27.665 :) @]

@@ -15,7 +15,7 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2016-10-12';
+$RecipeInfo['Geobox']['Version'] = '2017-06-17';
 
 
 if (function_exists('Markup_e')) {
@@ -241,6 +241,9 @@ function geobox_maps($param, $coords_param)
 	}
 	else if (strpos($cformat, "m") !== false) {
 		$COORDS=geobox_build_link('$NSig$Ndi&#176;$Nm\' $ESig$Edi&#176;$Em\'', $c);// DM
+	}
+	else if (strpos($cformat, "g") !== false) {
+		$COORDS=geobox_build_link('$LAT $Ndi&#176;$Nm $LON $Edi&#176;$Em', $c);// Geocaching / geocheck
 	}
 	else {
 		$COORDS=geobox_build_link('$NSig$Nd&#176; $ESig$Ed&#176;', $c);//
