@@ -15,7 +15,7 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2017-06-17';
+$RecipeInfo['Geobox']['Version'] = '2017-07-10';
 
 
 if (function_exists('Markup_e')) {
@@ -206,9 +206,11 @@ function geobox_parse_params($param)
   return $params;
 }
 
-function geobox_build_link($link, $c) 
+function geobox_build_link($link, $c)
 {
-   return preg_replace('/\\$([A-Za-z]+)/e', '$c[\'$1\']', $link);
+   return preg_replace_callback('/\\$([A-Za-z]+)/',
+		function($m) use ($c) { return $c[$m[1]]; },
+		$link);
 }
 
 function geobox_maps($param, $coords_param)
