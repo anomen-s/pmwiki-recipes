@@ -2,8 +2,9 @@
 
 # wikilog English version
 
-$monthnames = array('January','February','March','April','May','June','July','August', 'September','October','November','December'); $shortdaynames = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat','Sun');$longdaynames  = 
-array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
+$monthnames = array('January','February','March','April','May','June','July','August', 'September','October','November','December');
+$shortdaynames = array('Sun','Mon','Tue','Wed','Thu','Fri','Sat','Sun');
+$longdaynames  = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
 $noentries = 'No entries for';
 $today     = 'Today';
 $thisweek  = array('Yesterday',$today,'Tomorrow');
@@ -27,4 +28,3 @@ $ResetText = 'Reset';
 $AccessCodeText = 'Enter code';
 $posted_by = 'Posted $Date by $Author';
 
-?>
