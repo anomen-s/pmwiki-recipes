@@ -26,6 +26,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+$RecipeInfo['WikiCalendar']['Version'] = '2018-05-23';
 
 // =========================================================================
 // Configuration
@@ -59,6 +60,10 @@ SDV($calendar_month_wrap,3);
 // Whether or not to display current entries at the bottom of the calendar.
 // Enter 'false' to omit the current period's entries.
 SDV($display_log_entries,true);
+
+// Whether or not to add footer with date and author into posts.
+// Enter 'false' to omit the current period's entries.
+SDV($calendar_add_post_footer,true);
 
 // Whether to display current entries in ascending or descending order.
 // Enter 'false' to show the oldest first.
@@ -169,7 +174,7 @@ SDV($CalendarBoxFmt,"<div id='story'><h5>\$CalendarTitle</h5>
 	<td><select name='storydate'>\$StoryDate</select></td></tr>
 
 	<tr><td class='prompt'>\$SubpageText</td>
-	<td><input type='checkbox' name='subpage' checked /></td></tr>
+	<td><input type='checkbox' name='subpage'  /></td></tr>
 	<tr><td class='prompt'>\$HeadlineText</td>
 	<td><input type='text' name='csum' value='' size='40' /></td></tr>
 
@@ -845,8 +850,11 @@ function HandleWikilogPost($pagename) {
        $now = time();
        $posted = str_replace('$Date',strftime($TimeFmt,$now),
           str_replace('$Author',$name,$posted_by));
-       $_POST['text']= "!!!!".$_POST['csum']."\n".
-                   $_POST['text']."\n\n=>'-$posted-'";
+       $_POST['text']= $_POST['csum']."\n".
+                   $_POST['text'];
+       if ($calendar_add_post_footer) {
+          $_POST['text']= $_POST['text']."\n\n=>'-$posted-'";
+       }
    }
    $todayspage = MakePageName($pagename, $date);
    if (PageExists($todayspage)) {
@@ -860,4 +868,3 @@ function HandleWikilogPost($pagename) {
    exit;
 }
 
-?>
