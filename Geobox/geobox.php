@@ -15,7 +15,7 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2017-07-10';
+$RecipeInfo['Geobox']['Version'] = '2019-02-25';
 
 
 if (function_exists('Markup_e')) {
@@ -30,8 +30,7 @@ SDV($GeoBoxDefaultFormat,'dm');
 
 SDVA($GeoBoxLinks, array(
  'maps.google.com'=>'https://maps.google.com/?q=$N%20$E',
-// 'mapy.cz'=>'https://www.mapy.cz/zakladni?x=$E&amp;y=$N&amp;z=17&amp;source=coor&amp;id=$E%2C$N',
- 'mapy.cz'=>'https://www.mapy.cz/?st=search&fr=$N+$E',
+ 'mapy.cz'=>'https://mapy.cz/?source=coor&id=$E,$N',
  'geocaching.com/maps'=>'http://www.geocaching.com/map/default.aspx?lat=$N&amp;lng=$E',
  'geocaching.com/near'=>'http://www.geocaching.com/seek/nearest.aspx?lat=$N&amp;lng=$E&amp;f=1'
 ));
