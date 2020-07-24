@@ -1,11 +1,12 @@
-version=pmwiki-2.1.26 ordered=1 urlencoded=1
-agent=Opera/8.50 (Windows NT 5.0; U; en)
-author=
+version=pmwiki-2.2.91 ordered=1 urlencoded=1
+agent=Mozilla/5.0 (X11; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0
+author=ludek
+charset=ISO-8859-1
 csum=
 ctime=1165023270
-host=195.113.16.172
+host=::1
 name=Site.NumberOfArticles
-rev=6
+rev=10
 targets=
-text=(:if name {$SiteGroup}.NumberOfArticles:)%0aThis page updates number of pages counter.%0aTo display number of pages in your own page use markup:%0a @@(:@@@@numberofarticles:)@@%0a%0a%0a-> %25green font-style:italic%25 Current Number of pages is: (:if:)(:numberofarticles refresh:)%0a
-time=1166131325
+text=(:if name {$SiteGroup}.NumberOfArticles:)%0aThis page updates number of pages counter.%0aTo display number of pages in your own page use markup:%0a @@(:@@@@numberofarticles:)@@%0a%0a-> %25green font-style:italic%25 Current Number of pages is: (:if:)(:numberofarticles refresh:)(:if name {$SiteGroup}.NumberOfArticles:)%0a-> %25gray font-style:italic%25[-Updated on {(ftime)}-]%0a(:if:)
+time=1595594972
