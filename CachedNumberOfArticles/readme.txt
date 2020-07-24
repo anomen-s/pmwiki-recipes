@@ -48,7 +48,7 @@ Optional alternative:  create a new page with a name like "ThisRecipe-Talk" (e.g
 
 * [[Cookbook/NumberOfArticles]]
 
-: git repository : http://repo.or.cz/w/anomen-overlay.git/tree/HEAD:/www-apps/pmwiki/cookbook/CachedNumberOfArticles
+: git repository : https://github.com/anomen-s/pmwiki-recipes/tree/master/CachedNumberOfArticles
 
 !! Contributors
 * [[~Anomen]]

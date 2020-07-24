@@ -60,7 +60,7 @@ Use @@$EnablePageStoreXML@@ variable to enable/disable writing xml files.
 
 [[#seealso]]
 !! See also
-: git repo : http://repo.or.cz/w/anomen-overlay.git/tree/HEAD:/www-apps/pmwiki/cookbook/XMLPageStore
+: git repo : https://github.com/anomen-s/pmwiki-recipes/tree/master/XMLPageStore
 
 [[#contributors]]
 !! Contributors

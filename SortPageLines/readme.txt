@@ -42,7 +42,7 @@ No configuration available.
 
 [[#seealso]]
 !! See also
-: git repo : http://repo.or.cz/w/anomen-overlay.git/tree/HEAD:/www-apps/pmwiki/cookbook/SortPageLines
+: git repo : https://github.com/anomen-s/pmwiki-recipes/tree/master/SortPageLines
 
 [[#todo]]
 !!ToDos

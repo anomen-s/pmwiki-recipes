@@ -1,7 +1,7 @@
 [[#contributors]]
 !! Contributors
 !!!Alternative version by [[~Anomen]].
-: git repo : http://repo.or.cz/w/anomen-overlay.git/tree/HEAD:/www-apps/pmwiki/cookbook/AesCrypt
+: git repo : https://github.com/anomen-s/pmwiki-recipes/tree/master/AesCrypt
 : download : Attach:AesCrypt-2011-12-17.zip
 
 This version fixes several problems:

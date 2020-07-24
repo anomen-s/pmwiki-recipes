@@ -118,7 +118,7 @@ See PmWiki:Internationalizations for details.
 ||2004-01-10||1.0||Initial version.||
 
 : archived documentation : [[{$Name}-Archive]]
-: git repository : http://repo.or.cz/w/anomen-overlay.git/tree/HEAD:/www-apps/pmwiki/cookbook/RssFeedDisplay
+: git repository : https://github.com/anomen-s/pmwiki-recipes/tree/master/RssFeedDisplay
 
 
 [[#seealso]]

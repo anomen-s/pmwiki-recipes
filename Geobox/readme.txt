@@ -125,7 +125,7 @@ In link address you can use these variables (prefixed by @@$@@ sign):
 
 [[#seealso]]
 !! See also
-: git repository : http://repo.or.cz/w/anomen-overlay.git/tree/HEAD:/www-apps/pmwiki/cookbook/Geobox
+: git repository : https://github.com/anomen-s/pmwiki-recipes/tree/master/Geobox
 
 !!!Links
 * http://transition.fcc.gov/mb/audio/bickel/sprong.html
