@@ -26,7 +26,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-$RecipeInfo['WikiCalendar']['Version'] = '2018-05-23';
+$RecipeInfo['WikiCalendar']['Version'] = '2018-06-01';
 
 // =========================================================================
 // Configuration
@@ -62,7 +62,7 @@ SDV($calendar_month_wrap,3);
 SDV($display_log_entries,true);
 
 // Whether or not to add footer with date and author into posts.
-// Enter 'false' to omit the current period's entries.
+// Enter 'false' to disable footer.
 SDV($calendar_add_post_footer,true);
 
 // Whether to display current entries in ascending or descending order.
@@ -173,8 +173,10 @@ SDV($CalendarBoxFmt,"<div id='story'><h5>\$CalendarTitle</h5>
 	<td class='prompt'>\$DateText</td>
 	<td><select name='storydate'>\$StoryDate</select></td></tr>
 
+	<!--
 	<tr><td class='prompt'>\$SubpageText</td>
-	<td><input type='checkbox' name='subpage'  /></td></tr>
+	<td><input type='checkbox' name='subpage' checked /></td></tr>
+	-->
 	<tr><td class='prompt'>\$HeadlineText</td>
 	<td><input type='text' name='csum' value='' size='40' /></td></tr>
 
@@ -479,7 +481,7 @@ function list_entries($month, $year, $group) {
 				  strpos($snippet['text'], "\n"));
  				$firstpara = preg_replace("/^[#*!]+\s*/","", 
 				  htmlspecialchars($firstpara,ENT_NOQUOTES,$Charset));
-        $firstpara = preg_replace("/^:?.*?:/","",$firstpara);
+		//$firstpara = preg_replace("/^:?.*?:/","",$firstpara); // FIXME: this should remove def of pattern ": def : text", but removes anyting before :
 		$firstpara = preg_replace("/`\\..*?$/","...",$firstpara);
 		$firstpara = preg_replace("/\\(:(redirect)\s+(.*):\\)/",
 			"''$1s to page [[$2]]''", $firstpara);
@@ -831,7 +833,7 @@ function auditWikilog() {
 
 function HandleWikilogPost($pagename) {
    global $_POST,$TimeFmt,$SpaceDateString,$posted_by,$EditRedirectFmt, $FmtV,
-     $ParentDateFmt, $RecentChangesFmt, $calendar_subpages;
+     $ParentDateFmt, $RecentChangesFmt, $calendar_subpages, $calendar_add_post_footer;
    $date = str_replace($SpaceDateString,'',$_POST['storydate']);
    if (@$_POST['subpage']) {
        SDV($RecentChangesFmt['$Group.$EventDate'], 
