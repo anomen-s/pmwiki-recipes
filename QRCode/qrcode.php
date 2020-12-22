@@ -14,7 +14,9 @@
 $RecipeInfo['QRCode']['Version'] = '2020-12-15';
 
 SDV($PHPQRCODE_PATH, dirname(__FILE__) . "/phpqrcode");
-include_once($PHPQRCODE_PATH . "/phpqrcode.php");
+require_once($PHPQRCODE_PATH . "/phpqrcode.php");
+
+SDV($QR_ECLEVEL, QR_ECLEVEL_M);
 
 if (function_exists('Markup_e')) {
   Markup_e('qrcode','inline','/\(:qr\s+(.*\S)\s*:\)/',
@@ -25,7 +27,7 @@ if (function_exists('Markup_e')) {
 }
 
 function qr_img_gen($text) {
-    $frame = QRcode::text($text, false, QR_ECLEVEL_M);
+    $frame = QRcode::text($text, false, $QR_ECLEVEL);
 
     $h = count($frame);
     $w = strlen($frame[0]);
@@ -65,7 +67,7 @@ function qr_code_gen($text)
     $imageData = base64_encode(qr_img_gen($text));
 
     $qtext = htmlspecialchars($text);
-#   print_r($frame);
+
     // Echo out a sample image
     return '<img title="' . $qtext . '" alt="' . $qtext . '" src="data:image/png;base64,' . $imageData . '" />';
 }
