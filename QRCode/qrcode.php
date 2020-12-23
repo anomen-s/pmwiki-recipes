@@ -11,7 +11,7 @@
     (at your option) any later version.
 */
 
-$RecipeInfo['QRCode']['Version'] = '2020-12-15';
+$RecipeInfo['QRCode']['Version'] = '2020-12-22';
 
 SDV($PHPQRCODE_PATH, dirname(__FILE__) . "/phpqrcode");
 require_once($PHPQRCODE_PATH . "/phpqrcode.php");
@@ -27,6 +27,7 @@ if (function_exists('Markup_e')) {
 }
 
 function qr_img_gen($text) {
+    global $QR_ECLEVEL;
     $frame = QRcode::text($text, false, $QR_ECLEVEL);
 
     $h = count($frame);
