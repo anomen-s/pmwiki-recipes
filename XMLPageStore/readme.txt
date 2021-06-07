@@ -27,7 +27,7 @@ and add the following lines to ''local/config.php'':
 
 [@
   $EnablePageStoreXML = 1;
-  include_once('cookbook/XMLPageStore.php');
+  include_once('$FarmD/cookbook/XMLPageStore.php');
   $WikiDir = new XMLPageStore('wiki.d/{$FullName}');
 @]
 
@@ -38,7 +38,7 @@ Please make sure the above cookbook script is loaded before other scripts.
 
 If you want to convert all of your files at once append the following line to local/config.php:
 [@
-    ConvertGZ();
+    ConvertXML();
 @]
 
 
