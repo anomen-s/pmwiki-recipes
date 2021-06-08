@@ -1,8 +1,8 @@
 >>recipeinfo<<
 Summary: Store pages as XML files
 Version: 2012-12-27
-Prerequisites: Requires at least PmWiki version: 2.2.0; last tested on PmWiki version: 2.2.45
-Status: Beta
+Prerequisites: Requires at least PmWiki version: 2.2.0; last tested on PmWiki version: 2.2.134
+Status: 
 Maintainer:  [[~Anomen]]
 Categories: [[!Administration]], [[!CustomPageStore]]
 Users: {{$FullName}-Users$Rating2} ([[{$FullName}-Users|View]] / [[{$FullName}-Users?action=edit|Edit]])
