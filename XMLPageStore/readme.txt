@@ -27,7 +27,7 @@ and add the following lines to ''local/config.php'':
 
 [@
   $EnablePageStoreXML = 1;
-  include_once('$FarmD/cookbook/XMLPageStore.php');
+  include_once("$FarmD/cookbook/XMLPageStore.php");
   $WikiDir = new XMLPageStore('wiki.d/{$FullName}');
 @]
 
