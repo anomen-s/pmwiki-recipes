@@ -1,6 +1,6 @@
 >>recipeinfo<<
 Summary: Create QR code.
-Version: 2020-12-15
+Version: 2021-10-25
 Prerequisites:
 Status:
 Maintainer: [[~Anomen]]
@@ -55,6 +55,7 @@ Use qr markup
 [[#relnotes]]
 !! Change log / Release notes
 * 2020-12-15 - initial release
+* 2021-10-25 - update for PHP 8
 
 [[#seealso]]
 !! See also

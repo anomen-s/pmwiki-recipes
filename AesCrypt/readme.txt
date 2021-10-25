@@ -2,7 +2,7 @@
 !! Contributors
 !!!Alternative version by [[~Anomen]].
 : git repo : https://github.com/anomen-s/pmwiki-recipes/tree/master/AesCrypt
-: download : Attach:AesCrypt-2011-12-17.zip
+: download : Attach:AesCrypt-2021-10-25.zip
 
 This version fixes several problems:
 * non-standard and weak (only 128bit) key derivation function replaced with SHA-256
