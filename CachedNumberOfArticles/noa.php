@@ -12,19 +12,19 @@
     (at your option) any later version.
 */
 
-$RecipeInfo['CachedNumberOfArticles']['Version'] = '2016-01-13';
+$RecipeInfo['CachedNumberOfArticles']['Version'] = '2021-10-25';
 
-if (function_exists('Markup_e')) {
-  Markup_e('numberofarticles','inline','/\(:numberofarticles(\s+refresh)?\s*:\)/',
-    "Keep(getNumArticles(\$m[1]))");
-} else {
-  Markup('numberofarticles','inline','/\(:numberofarticles(\s+refresh)?\s*:\)/e',
-    "Keep(getNumArticles('$1'))");
-}
+
+Markup('numberofarticles','inline','/\\(:numberofarticles(\s+refresh)?\s*:\\)/si',
+    "mu_Noa");
 
 $NOAFile = "$WorkDir/.noa";
 
-function refreshNumArticles()
+function mu_Noa($m) {
+  return Keep(noa_GetNumArticles($m[1]));
+}
+
+function noa_RefreshNumArticles()
 {
    global $NOAFile;
    global $WikiDir;
@@ -38,16 +38,16 @@ function refreshNumArticles()
    return "<!--fresh-->$count\n";
 }
 
-function getNumArticles($refresh)
+function noa_GetNumArticles($refresh)
 {
     global $NOAFile;
     $content = array();
 
     if (!empty($refresh)) {
-	return refreshNumArticles();
+	return noa_RefreshNumArticles();
 
     } else if (FALSE === ($content = @file($NOAFile))) {
-	return refreshNumArticles();
+	return noa_RefreshNumArticles();
 
     } else {      
 	return implode('', $content);

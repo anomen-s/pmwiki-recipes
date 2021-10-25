@@ -1,6 +1,6 @@
 >>recipeinfo<<
 Summary: Count pages in wiki
-Version: 2011-10-13
+Version: 2021-10-25
 Prerequisites:
 Status: Stable
 Maintainer: [[profiles/Anomen]]
