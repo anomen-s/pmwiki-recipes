@@ -1,16 +1,15 @@
 <?php if (!defined('PmWiki')) exit();
-
 /*
     AesCrypt
 
-    Copyright 2011-2017 Anomen (ludek_h@seznam.cz)
+    Copyright 2011-2021 Anomen (ludek_h@seznam.cz)
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
     by the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
 */
 
-$RecipeInfo['AesCrypt']['Version'] = '2017-01-14';
+$RecipeInfo['AesCrypt']['Version'] = '2021-10-25';
 
 SDV($AesCryptKDF, 'sha256_dup');
 SDV($AesCryptKDFJSCode, "
@@ -101,8 +100,9 @@ AesCrypt.PubDirUrl = '$PubDirUrl/aescrypt';
 ";
 
 /* generate decryption code */
-function aescryptMarkup($ciphertext)
+function aescryptMarkup($m)
 {
+    $ciphertext = $m[1];
     static $id = 0;
     $id++;
     $res = "\n";
@@ -115,17 +115,10 @@ function aescryptMarkup($ciphertext)
     return $res;
 }
 
-if (function_exists('Markup_e')) {
-  Markup_e('aescrypt',
+Markup('aescrypt',
        ">block",
-       "/\\Q$AesCryptCipherToken\\E\\s*([a-zA-Z0-9\\/\\+]+=*)\\s*\\Q$AesCryptEndToken\\E/s",
-       "aescryptMarkup(\$m[1])");
-} else {
-  Markup('aescrypt',
-       ">block",
-       "/\\Q$AesCryptCipherToken\\E\\s*([a-zA-Z0-9\\/\\+]+=*)\\s*\\Q$AesCryptEndToken\\E/se",
-       "aescryptMaxrkup('$1')");
-}
+       "/\\Q$AesCryptCipherToken\\E\\s*([a-zA-Z0-9\\/\\+]+=*)\\s*\\Q$AesCryptEndToken\\E/si",
+       "aescryptMarkup");
 
 if ($action == 'edit') {
 
