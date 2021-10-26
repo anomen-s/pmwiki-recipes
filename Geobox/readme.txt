@@ -1,6 +1,6 @@
 >>recipeinfo<<
 Summary: Create links to various map sites from provided gps coordinates.
-Version: 2016-01-13
+Version: 2021-10-26
 Prerequisites: 
 Status: 
 Maintainer: [[~Anomen]]
@@ -118,6 +118,7 @@ In link address you can use these variables (prefixed by @@$@@ sign):
 
 [[#relnotes]]
 !! Change log / Release notes
+* 2021-10-26 - update for PHP 8
 * 2016-01-13 - fixed compatibility with PHP 5.5
 * 2010-06-12 - added to PmWiki Cookbook
 * 2011-08-22 - point projection, configurable link list and various improvements

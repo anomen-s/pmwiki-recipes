@@ -4,7 +4,7 @@
     This script adds support for gps coordinates conversion and displaying at maps
     - add (:geo [args] coords :) tag functionality
 
-    Copyright 2006-2016 Anomen (ludek_h@seznam.cz)
+    Copyright 2006-2021 Anomen (ludek_h@seznam.cz)
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
     by the Free Software Foundation; either version 2 of the License, or
@@ -15,30 +15,28 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2019-02-25';
+$RecipeInfo['Geobox']['Version'] = '2021-10-26';
 
-
-if (function_exists('Markup_e')) {
-  Markup_e('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/',
-    "geobox_maps(strtolower(\$m[1]),\$m[2])");
-} else {
-  Markup('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/e',
-    "geobox_maps(strtolower('$1'),'$2')");
-}
+Markup('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/si',
+    "geobox_markup");
 
 SDV($GeoBoxDefaultFormat,'dm');
 
 SDVA($GeoBoxLinks, array(
  'maps.google.com'=>'https://maps.google.com/?q=$N%20$E',
  'mapy.cz'=>'https://mapy.cz/?source=coor&id=$E,$N',
- 'geocaching.com/maps'=>'http://www.geocaching.com/map/default.aspx?lat=$N&amp;lng=$E',
- 'geocaching.com/near'=>'http://www.geocaching.com/seek/nearest.aspx?lat=$N&amp;lng=$E&amp;f=1'
+ 'geocaching.com/maps'=>'http://www.geocaching.com/map/default.aspx?lat=$N&lng=$E',
+ 'geocaching.com/near'=>'http://www.geocaching.com/seek/nearest.aspx?lat=$N&lng=$E&f=1'
 ));
+
+function geobox_markup($m) {
+  return geobox_maps(strtolower($m[1]), $m[2]);
+}
 
 function geobox_asint($m, $index) 
 {
   $res = 0;
-  if (isset($m[$index])) {
+  if (!empty($m[$index])) {
     $res = strtr($m[$index], ',', '.');
   }
   return $res;
@@ -207,9 +205,10 @@ function geobox_parse_params($param)
 
 function geobox_build_link($link, $c)
 {
-   return preg_replace_callback('/\\$([A-Za-z]+)/',
-		function($m) use ($c) { return $c[$m[1]]; },
-		$link);
+  return preg_replace_callback(
+        '/\\$([A-Za-z]+)/',
+        function($m) use ($c) { return $c[$m[1]]; },
+        $link);
 }
 
 function geobox_maps($param, $coords_param)
@@ -255,7 +254,7 @@ function geobox_maps($param, $coords_param)
   if (is_array($GeoBoxLinks) && !empty($GeoBoxLinks)) {
     $result .= " - ";
     foreach ($GeoBoxLinks as $t=>$l) {
-      $l = geobox_build_link($l, $c);
+      $l = geobox_build_link(htmlspecialchars($l), $c);
       $result .= " [[$l | $t]]";
     }
   }
