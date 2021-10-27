@@ -26,7 +26,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-$RecipeInfo['WikiCalendar']['Version'] = '2018-06-01';
+$RecipeInfo['WikiCalendar']['Version'] = '2021-10-26';
 
 // =========================================================================
 // Configuration
@@ -96,20 +96,31 @@ $WikiDateCreateFmt = "<a class='nonexistent-date' rel='nofollow' ".
     "href='\$PageUrl?action=edit'>\$LinkText</a>";
 
 ## process date links
-Markup_e('datelink','>inline',
+Markup('datelink','>inline',
     "/\[\[($GroupPattern(?:[\/.])$CalendarPattern)\|(.*?)\]\]/",
-    "Keep(MakeDateLink(\$pagename,\$m[1],\$m[2]),'L')");
-Markup_e('daylink','>inline',
+    "mu_datelink");
+Markup('daylink','>inline',
     "/\[\[((?:$GroupPattern\/)?($CalendarPattern))\]\]/",
-    "Keep(MakeDateLink(\$pagename,\$m[1],(IsDate(\$m[2]) ? longdate(\$m[2]) : \$m[2])),'L')");
+    "mu_daylink");
 
 ## process date markup
 SDV($DateSeparatorPattern,'[-.\/]');
 Markup('wdate','inline',
     "/([^_\/\)=]|^)(\d\d\d\d)($DateSeparatorPattern)(\d\d)\\3(\d\d)/",
     "wdateHelper");
+
 function wdateHelper($m) {
   return IsDate($m[2].$m[4].$m[5]) ? $m[1].longdate($m[2].$m[4].$m[5]) : $m[0];
+}
+
+function mu_datelink($m){
+  global $pagename;
+  return Keep(MakeDateLink($pagename,$m[1],$m[2]),'L');
+}
+
+function mu_daylink($m){
+  global $pagename;
+  return Keep(MakeDateLink($pagename,$m[1],(IsDate($m[2]) ? longdate($m[2]) : $m[2])),'L');
 }
 
 // Whether to display non-existent date entries in the calendar as day or day?
@@ -156,9 +167,14 @@ SDV($PublishCalendarFmt,
 SDV($calendar_months_listed,15);
 // How many months into the future to show in the list.
 SDV($calendar_months_future,3);
-Markup_e('wnav','<links',
+Markup('wnav','<links',
     "/^\(:wikilognav(?:\s+($GroupPattern)(?:[.\/]($NamePattern))?)?:\)/",
-    "'<:block><ul>'.list_calendar_months(\$pagename,\$m[1],\$m[2]).'</ul>'");
+    "mu_wnav");
+
+function mu_wnav($m) {
+    global $pagename;
+    return Keep('<:block><ul>'.list_calendar_months($pagename,$m[1],$m[2]).'</ul>');
+}
 
 // (:wikilogbox:) to post short stories to today's page
 SDV($calendar_box_access_code,true);
@@ -194,14 +210,11 @@ if ($action == 'wikilog') {
     if (auditWikilog()) SDV($HandleActions['wikilog'],'HandleWikilogPost');
     else Redirect($pagename);
 } else if ($action=='print' || $action=='publish') {
-    Markup('wbox','>links','/\(:wikilogbox(chrono)?\s*(.*?):\)/','');
-    Markup('pubcal','>title','/\(:publishcalendar:\)/','');
+    Markup('wbox','>links','/\(:wikilogbox(chrono)?\s*(.*?):\)/','mu_blank');
+    Markup('pubcal','>title','/\(:publishcalendar:\)/','mu_blank');
 } else
-    Markup_e('wbox','>links','/\(:wikilogbox(chrono)?\s*(.*?):\)/',
-        "'<:block>'.Keep(str_replace(
-  array('\$CalendarTitle','\$StoryDate','\$Chrono','\$AccessCode'),
-  array(SetCalendarTitle(\$m[2]),select_calendar_date(\$pagename),\$m[1],
-        rand(100,999)), FmtPageName(\$GLOBALS['CalendarBoxFmt'],\$pagename)))");
+    Markup('wbox','>links','/\(:wikilogbox(chrono)?\s*(.*?):\)/',
+    "mu_wbox");
 # load the wikilog stylesheet
 $HTMLHeaderFmt[] = 
  "<link rel='stylesheet' href='\$FarmPubDirUrl/css/wikilog.css' type='text/css' />";
@@ -224,18 +237,62 @@ if (isset($_GET['logdate'])) {
     $logdate =  $_GET['logdate'];
     $FmtV['$Logdate'] = $logdate;
 } else $logdate = '';
-Markup_e('wikilog','<title',"/^\(:wikilog:\)\s*$/",
-    "view_calendar(\$pagename,'')");
-Markup_e('wikilogn','<title',"/^\(:wikilog(?:news)?\s+($NamePattern):\)\s*$/",
-    "view_calendar_choice(\$pagename,\$m[1])");
-Markup_e('wikinews','directives',
+Markup('wikilog','<title',"/^\(:wikilog:\)\s*$/",
+    "mu_wikilog");
+Markup('wikilogn','<title',"/^\(:wikilog(?:news)?\s+($NamePattern):\)\s*$/",
+    "mu_wikilogn");
+Markup('wikinews','directives',
     "/^\(:wikilog(?:news)?\s+($GroupPattern)[.\/]($NamePattern):\)\s*$/",
-    "'<:block>'.view_calendar_list(\$pagename,\$m[1],\$m[2])");
-Markup_e('wikidate','>wikilogn','/\(:\wikilogtitle:\)/',"show_date(\$pagename)");
-Markup_e('pubcal','>title','/\(:publishcalendar:\)/',
-   "Keep(FmtPageName(\$GLOBALS['PublishCalendarFmt'],\$pagename))");
-Markup_e('week','>nl1',"/^\(:thisweek(?:\s+([-+]?\d+))?:\)\s*$/",
-    "calendar_week(\$pagename,\$m[1])");
+    "mu_wikinews");
+Markup('wikidate','>wikilogn','/\(:\wikilogtitle:\)/',
+    "mu_wikidate");
+Markup('pubcal','>title','/\(:publishcalendar:\)/',
+    "mu_pubcal");
+Markup('week','>nl1',"/^\(:thisweek(?:\s+([-+]?\d+))?:\)\s*$/",
+    "mu-week");
+
+
+function mu_wbox($m) {
+  global $pagename;
+  return '<:block>'.Keep(str_replace(
+  array('$CalendarTitle', '$StoryDate', '$Chrono', '$AccessCode'),
+  array(SetCalendarTitle($m[2]), select_calendar_date($pagename), $m[1], rand(100,999)),
+  FmtPageName($GLOBALS['CalendarBoxFmt'], $pagename)));
+}
+
+function mu_blank($m) {
+    return "";
+}
+
+function mu_wikilog($m) {
+    global $pagename;
+    return view_calendar($pagename,'');
+}
+
+function mu_wikilogn($m) {
+    global $pagename;
+    return view_calendar_choice($pagename,$m[1]);
+}
+
+function mu_wikinews($m) {
+    global $pagename;
+    return '<:block>'.view_calendar_list($pagename,$m[1],$m[2]);
+}
+
+function mu_wikidate($m) {
+    global $pagename;
+    return show_date($pagename);
+}
+
+function mu_pubcal($m) {
+    global $pagename;
+    return Keep(FmtPageName($GLOBALS['PublishCalendarFmt'],$pagename));
+}
+
+function mu_week($m) {
+    global $pagename;
+    return calendar_week($pagename,$m[1]);
+}
 
 $Name = FmtPageName('$Name',$pagename);
 if (IsDate($Name)) $SpacedName = preg_replace('/(..)(..)$/',
