@@ -5,7 +5,7 @@ DEST=`pwd`
 echo AesCrypt ...
 
 
-VERSION=1.0
+VERSION=2021-10-25
 TMP=$TMPD/aescrypt
 mkdir -p "$TMP/cookbook"  "$TMP/pub/aescrypt" "$TMP/pub/guiedit"
 cp AesCrypt/aescrypt.php "$TMP/cookbook"
@@ -21,7 +21,7 @@ tar -c -v -z -f aescrypt-$VERSION.tgz -C  "$TMP/" cookbook pub
 
 echo CachedNumberOfArticles ...
 
-VERSION=1.0
+VERSION=2021-10-25
 TMP=$TMPD/cachednumberofarticles
 mkdir -p "$TMP/cookbook"  "$TMP/wikilib.d"
 cp CachedNumberOfArticles/noa.php "$TMP/cookbook"
@@ -30,3 +30,15 @@ cp CachedNumberOfArticles/Site.NumberOfArticles "$TMP/wikilib.d"
 tar -c -v -z -f noa-$VERSION.tgz -C  "$TMP/" cookbook wikilib.d
 
 ( cd  "$TMP/" ; zip -v -9 -r "$DEST/noa-$VERSION.zip" cookbook wikilib.d )
+
+echo FileList ...
+
+VERSION=2021-10-26
+TMP=$TMPD/filelist
+mkdir -p "$TMP/cookbook" "$TMP/pub/images"
+cp FileList/filelist.php "$TMP/cookbook"
+cp FileList/dot3.png "$TMP/pub/images"
+
+tar -c -v -z -f filelist-$VERSION.tgz -C  "$TMP/" cookbook pub
+
+( cd  "$TMP/" ; zip -v -9 -r "$DEST/filelist-$VERSION.zip" cookbook pub )
