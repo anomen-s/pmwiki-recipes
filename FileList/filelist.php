@@ -1,7 +1,7 @@
 <?php if (!defined('PmWiki')) exit();
 /*
     filelist.php
-    Copyright 2012 Anomen
+    Copyright 2012-2021 Anomen
     Copyright 2007 Hans Bracker
     Copyright 2004-2007 Patrick Michaud
     This program is free software; you can redistribute it and/or modify
@@ -11,7 +11,7 @@
     
     Script to create alternative filelists with markup (:filelist:)
 */
-$RecipeInfo['FileList']['Version'] = '2012-09-24';
+$RecipeInfo['FileList']['Version'] = '2021-10-26';
 
 SDV($FileListTimeFmt, '%d %b %Y');
 #alternatively use pmwiki's time format:
@@ -21,9 +21,15 @@ SDV($FileListTimeFmt, '%d %b %Y');
 include_once("$FarmD/scripts/upload.php");
 
 # add (:filelist:) as another kind of attachlist
-Markup('filelist', '<block', 
-  '/\\(:filelist\\s*(.*?):\\)/ei',
-  "Keep('<table class=\"filelist\">'.FmtUploadList2('$pagename',PSS('$1')).'</table>')");
+Markup('filelist',
+  '<block',
+  '/\\(:filelist\\s*(.*?):\\)/si',
+  "mu_FileList");
+
+function mu_FileList($m) {
+  global $pagename;
+  return Keep('<table class=\"filelist\">' . FmtUploadList2($pagename, $m[1]) . '</table>');
+}
 
 # file list generation & formatting
 function FmtUploadList2($pagename, $args) {
@@ -57,26 +63,26 @@ function FmtUploadList2($pagename, $args) {
   if (!$dirp) return '';
   $filelist = array();
   while (($file=readdir($dirp)) !== false) {
-    if ($file{0} == '.') continue;
+    if ($file[0] == '.') continue;
     if (@$matchext && !preg_match(@$matchext, $file)) continue;
     if (@$matchre && !preg_match(@$matchre, $file)) continue;
     $filelist[$file] = $file;
   }
   closedir($dirp);
   $out = array();
-  #asort($filelist);
+  asort($filelist);
   $overwrite = '';
   foreach($filelist as $file=>$x) {
     $name = PUE("$uploadurl$file");
     $stat = stat("$uploaddir/$file");
-   
-    if ($EnableUploadOverwrite) 
+
+    if ($EnableUploadOverwrite)
       $overwrite = FmtPageName("<a class='createlink'
         href='\$PageUrl?action=upload&amp;upname=$file'>&nbsp;&Delta;</a>", 
         $pagename);
-  
+
     $out[] = "<tr><td class='dotted'> <a href='$name'>$file</a>$overwrite &nbsp;&nbsp;</td>"
-        ."<td class='dotted' align=right><span class='nodots'>".number_format($stat['size']/1024). "Kb</span></td>"
+        ."<td class='dotted' align=right><span class='nodots'>".number_format($stat['size']/1024). "KB</span></td>"
         ."<td>&nbsp;&nbsp;&nbsp;".strftime($FileListTimeFmt, $stat['mtime'])."</td>" 
         ."<tr>";
    
