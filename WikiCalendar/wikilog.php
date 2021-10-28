@@ -114,12 +114,12 @@ function wdateHelper($m) {
 }
 
 function mu_datelink($m){
-  global $pagename;
+  extract($GLOBALS['MarkupToHTML']);
   return Keep(MakeDateLink($pagename,$m[1],$m[2]),'L');
 }
 
 function mu_daylink($m){
-  global $pagename;
+  extract($GLOBALS['MarkupToHTML']);
   return Keep(MakeDateLink($pagename,$m[1],(IsDate($m[2]) ? longdate($m[2]) : $m[2])),'L');
 }
 
@@ -172,7 +172,7 @@ Markup('wnav','<links',
     "mu_wnav");
 
 function mu_wnav($m) {
-    global $pagename;
+    extract($GLOBALS['MarkupToHTML']);
     return Keep('<:block><ul>'.list_calendar_months($pagename,$m[1],$m[2]).'</ul>');
 }
 
@@ -253,7 +253,7 @@ Markup('week','>nl1',"/^\(:thisweek(?:\s+([-+]?\d+))?:\)\s*$/",
 
 
 function mu_wbox($m) {
-  global $pagename;
+  extract($GLOBALS['MarkupToHTML']);
   return '<:block>'.Keep(str_replace(
   array('$CalendarTitle', '$StoryDate', '$Chrono', '$AccessCode'),
   array(SetCalendarTitle($m[2]), select_calendar_date($pagename), $m[1], rand(100,999)),
@@ -265,32 +265,32 @@ function mu_blank($m) {
 }
 
 function mu_wikilog($m) {
-    global $pagename;
+    extract($GLOBALS['MarkupToHTML']);
     return view_calendar($pagename,'');
 }
 
 function mu_wikilogn($m) {
-    global $pagename;
+    extract($GLOBALS['MarkupToHTML']);
     return view_calendar_choice($pagename,$m[1]);
 }
 
 function mu_wikinews($m) {
-    global $pagename;
+    extract($GLOBALS['MarkupToHTML']);
     return '<:block>'.view_calendar_list($pagename,$m[1],$m[2]);
 }
 
 function mu_wikidate($m) {
-    global $pagename;
+    extract($GLOBALS['MarkupToHTML']);
     return show_date($pagename);
 }
 
 function mu_pubcal($m) {
-    global $pagename;
+    extract($GLOBALS['MarkupToHTML']);
     return Keep(FmtPageName($GLOBALS['PublishCalendarFmt'],$pagename));
 }
 
 function mu_week($m) {
-    global $pagename;
+    extract($GLOBALS['MarkupToHTML']);
     return calendar_week($pagename,$m[1]);
 }
 

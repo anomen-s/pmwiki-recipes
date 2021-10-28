@@ -27,7 +27,7 @@ Markup('filelist',
   "mu_FileList");
 
 function mu_FileList($m) {
-  global $pagename;
+  extract($GLOBALS['MarkupToHTML']);
   return Keep('<table class=\"filelist\">' . FmtUploadList2($pagename, $m[1]) . '</table>');
 }
 
