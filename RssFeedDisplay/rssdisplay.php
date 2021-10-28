@@ -14,7 +14,7 @@
     displays the pmwiki feed in short layout and  all lines in the feed
     (:RSS http://www.pmichaud.com/wiki/Pm/AllRecentChanges?action=rss short -1 :)
 
-    Copyright 2006-2011 Anomen (ludek_h@seznam.cz)
+    Copyright 2006-2021 Anomen (ludek_h@seznam.cz)
     Copyright 2005 http://www.brambring.nl
     Copyright 2005 http://mypage.iu.edu/~mweiner/index.html
     This program is free software; you can redistribute it and/or modify
@@ -24,13 +24,9 @@
 
 */
 
-$RecipeInfo['RSSDisplay']['Version'] = '2016-01-14';
+$RecipeInfo['RSSDisplay']['Version'] = '2021-10-28';
 
-if (function_exists('Markup_e')) {
-  Markup_e('rssdisplay', 'fulltext', '/\(:RSS\s*(.*?)\s*:\)/',"MagpieRSS(\$m[1])");
-} else {
-  Markup('rssdisplay', 'fulltext', '/\(:RSS\s*(.*?)\s*:\)/e',"MagpieRSS('\$1')");
-}
+Markup('rssdisplay', 'fulltext', '/\(:RSS\s*(.*?)\s*:\)/', "mu_rssdisplay");
 
 SDV($MagpieDir, "$FarmD/cookbook/magpie");
 SDV($MagpieDebug, false);
@@ -60,6 +56,9 @@ SDV($HTMLStylesFmt['rssdisplay'], "
 }
 ");
 
+function mu_rssdisplay($m) {
+    return MagpieRSS($m[1]);
+}
 
 function MagpieRssPhpInclude()
 {

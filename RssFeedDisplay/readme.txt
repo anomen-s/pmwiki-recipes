@@ -1,6 +1,6 @@
 >>recipeinfo<<
 Summary: How to add an RSS feed to a page
-Version: 2011-12-06
+Version: 2021-10-28
 Prerequisites: 
 Status: 
 Maintainer: [[~Anomen]]
@@ -105,7 +105,8 @@ See PmWiki:Internationalizations for details.
 [[#relnotes]]
 !! Change log / Release notes
 ||width=75%
-||2011-11-30||    ||New rewritten version ([[~Anomen]])
+||2021-10-28||    ||'''Work-in-progress''' support PHP 8||
+||2011-11-30||    ||New rewritten version ([[~Anomen]])||
 ||2005-10-30||1.32||Added html_entity_decode for the rss-url (thanks to [[~JohnCooley]])||
 ||          ||    ||Added some utf8 translation to html entities||
 ||          ||    ||Cleaned the Comments & Bugs list below a bit||
@@ -127,6 +128,7 @@ See PmWiki:Internationalizations for details.
 
 !!!Links
 * [[http://magpierss.sourceforge.net/ |Magpie RSS]]
+* [[http://snoopy.sourceforge.net/ | Snoopy PHP net client]]
 
 [[#contributors]]
 !! Contributors
