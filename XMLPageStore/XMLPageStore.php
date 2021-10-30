@@ -3,18 +3,31 @@
 /*
     XMLPageStore
 
-    Copyright 2011 Anomen (ludek_h@seznam.cz)
+    Copyright 2011-2021 Anomen (ludek_h@seznam.cz)
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
     by the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
 */
-$RecipeInfo['XMLPageStore']['Version'] = '2012-12-27';
+$RecipeInfo['XMLPageStore']['Version'] = '2021-10-28';
 
 SDV($EnablePageStoreXML,false);
 
 
 class XMLPageStore extends PageStore {
+
+  function getNonEmpty($arr, $index1, $index2 = null) {
+    if (isset($arr[$index1])){
+      if (isset($index2)) {
+         if (isset($arr[$index1][$index2])) {
+           return $arr[$index1][$index2];
+         }
+      } else {
+         return $arr[$index1];
+      }
+    }
+    return null;
+  }
 
   function read_xml($data, $since=0)
   {
@@ -27,12 +40,12 @@ class XMLPageStore extends PageStore {
 #    xml_parser_set_option($p,XML_OPTION_SKIP_WHITE, true);
 
     xml_parse_into_struct($p, $data, $vals, $index);
-    xml_parser_free($p);
+
     foreach($vals as $v) {
 	if (($v['type'] == 'complete') && ($v['level'] == 2)) {
-	    $k = $v['tag'];
-	    $t = $v['attributes']['time'];
-	    $p = $v['attributes']['prev'];
+	    $k = $this->getNonEmpty($v, 'tag');
+	    $t = $this->getNonEmpty($v, 'attributes', 'time');
+	    $p = $this->getNonEmpty($v, 'attributes', 'prev');
 
 	    
 	    if (!empty($t)) {
@@ -44,7 +57,7 @@ class XMLPageStore extends PageStore {
 	    if (!empty($p)) {
 		$k = "$k:$p:";
     	    }
-    	    $page[$k] = $v['value'];
+    	    $page[$k] = $this->getNonEmpty($v,'value');
 	}
      }
     return @$page;
@@ -94,7 +107,7 @@ class XMLPageStore extends PageStore {
       $x = "<?xml version=\"1.0\" encoding=\"$Charset\"?>\n<page xmlns=\"http://www.pmwiki.org/cookbook/xmlpage\" version=\"$Version\">\n";
       $s = true && fputs($fp, $x); $sz = strlen($x);
       foreach($page as $k=>$v) 
-        if ($k > '' && $k{0} != '=') {
+        if ($k > '' && $k[0] != '=') {
     	  $v = htmlspecialchars($v, ENT_NOQUOTES, $Charset);
     	  if (preg_match("/^([a-z]+)(?::(\d+))(?::(\d+):)?$/", $k, $m)) {
     	    $p = empty($m[3]) ? "" : " prev=\"${m[3]}\"";

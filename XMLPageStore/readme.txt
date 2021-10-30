@@ -1,6 +1,6 @@
 >>recipeinfo<<
 Summary: Store pages as XML files
-Version: 2012-12-27
+Version: 2021-10-28
 Prerequisites: Requires at least PmWiki version: 2.2.0; last tested on PmWiki version: 2.2.134
 Status: 
 Maintainer:  [[~Anomen]]
@@ -57,6 +57,7 @@ Use @@$EnablePageStoreXML@@ variable to enable/disable writing xml files.
 * 2011-04-22 - added to PmWiki Cookbook
 * 2011-09-15 - minor fixes
 * 2012-12-27 - added support for converting all pages
+* 2021-10-27 - fix compatibility with PHP 8
 
 [[#seealso]]
 !! See also
