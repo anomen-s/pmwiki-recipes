@@ -34,10 +34,10 @@ to create link list:
  ''49°43.996' 014°27.665'' [[http://www.mapy.cz/?query=49.73327N%2014.46108E | mapy.cz]] [[http://maps.google.com/?q=49.73327%2014.46108|gmaps]] [[http://www.geocaching.com/map/default.aspx?lat=49.73327&lng=14.46108|geocaching.com/maps]] [[http://www.geocaching.com/seek/nearest.aspx?lat=49.73327&lng=14.46108&f=1|geocaching.com/near]]
 
 !!! Coordinate input format
-*Coordinates consists of latitude and logitude values separated by space character(s).
+* Coordinates consists of latitude and longitude values separated by space character(s).
 * Values can pre prefixed or postfixed with N or S for lat. and E or W for lon.
 * Decimal dot or coma can be used.
-* several different characters can be used as degree sign ( * ° ˚ º ). This simpifies usage across various keyboard layouts. Note: PmWiki must be setup to use Unicode.
+* several different characters can be used as degree sign ( * ° ˚ º ). This simplifies usage across various keyboard layouts. Note: PmWiki must be setup to use Unicode.
 * all three formats are recognised (degrees only and mixed formats with arcmin or arcmin+arcsec)
 * degree sign is mandatory only for mixed formats (to separate degrees and arcminutess)
 
@@ -60,6 +60,10 @@ Result of projection will be displayed (together with proper links) instead of o
 For example, following line will produce coordinates @@ 50.00949 15.18703 @@:
 
 [@ (:geo format=d azimuth=45 distance=2703 49.99232 15.16031 :) @]
+
+or shortly:
+
+[@ (:geo f=d a=45 d=2703 49.99232 15.16031 :) @]
 
 
 [[#config]]
