@@ -1,6 +1,6 @@
 >>recipeinfo<<
 Summary: Alphabetically sort lines in page.
-Version: 2011-08-24
+Version: 2023-07-20
 Prerequisites:
 Status: 
 Maintainer: [[~Anomen]]
@@ -21,13 +21,15 @@ Duplicate and empty lines are removed.
 
 [[#install]]
 !!Installation
-Download [[(Attach:)sortpagelines.zip]].
+Download [[(Attach:)sortpagelines.php]].
 
 In config.php, add the following line:
 
 [@
  include_once("$FarmD/cookbook/sortpagelines.php");
 @]
+
+Put [[(Attach:)sort_asc.png]] and [[(Attach:)sort_desc.png]] to [@pub/guiedit@].
 
 [[#usage]]
 !!Usage
