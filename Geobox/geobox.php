@@ -15,7 +15,7 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2021-10-26';
+$RecipeInfo['Geobox']['Version'] = '2023-11-11';
 
 Markup('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/si',
     "geobox_markup");
@@ -26,7 +26,7 @@ SDVA($GeoBoxLinks, array(
  'maps.google.com'=>'https://maps.google.com/?q=$N%20$E',
  'mapy.cz'=>'https://mapy.cz/?source=coor&id=$E,$N',
  'geocaching.com/maps'=>'http://www.geocaching.com/map/default.aspx?lat=$N&lng=$E',
- 'geocaching.com/near'=>'http://www.geocaching.com/seek/nearest.aspx?lat=$N&lng=$E&f=1'
+ 'geohack'=>'https://geohack.toolforge.org/geohack.php?params=$Nd_$LAT_$Ed_$LON_type:landmark_dim:10'
 ));
 
 function geobox_markup($m) {
