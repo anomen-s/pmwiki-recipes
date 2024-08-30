@@ -15,7 +15,7 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2023-11-11';
+$RecipeInfo['Geobox']['Version'] = '2024-08-30';
 
 Markup('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/si',
     "geobox_markup");
@@ -27,6 +27,13 @@ SDVA($GeoBoxLinks, array(
  'mapy.cz'=>'https://mapy.cz/?source=coor&id=$E,$N',
  'geocaching.com/maps'=>'http://www.geocaching.com/map/default.aspx?lat=$N&lng=$E',
  'geohack'=>'https://geohack.toolforge.org/geohack.php?params=$Nd_$LAT_$Ed_$LON_type:landmark_dim:10'
+));
+
+SDVA($GeoBoxIcons, array(
+ 'maps.google.com'=>'gmaps.png',
+ 'mapy.cz'=>'mapy.cz.png',
+ 'geocaching.com/maps'=>'geocaching.png',
+ 'geohack'=>'wikimedia.png'
 ));
 
 function geobox_markup($m) {
@@ -213,7 +220,7 @@ function geobox_build_link($link, $c)
 
 function geobox_maps($param, $coords_param)
 {
-    global $GeoBoxDefaultFormat, $GeoBoxLinks;
+    global $GeoBoxDefaultFormat, $GeoBoxLinks, $GeoBoxIcons, $FarmPubDirUrl;
 
     $c = geobox_parse_coords($coords_param);
     
@@ -254,8 +261,12 @@ function geobox_maps($param, $coords_param)
   if (is_array($GeoBoxLinks) && !empty($GeoBoxLinks)) {
     $result .= " - ";
     foreach ($GeoBoxLinks as $t=>$l) {
-      $l = geobox_build_link(htmlspecialchars($l), $c);
-      $result .= " [[$l | $t]]";
+      $lnk = geobox_build_link(htmlspecialchars($l), $c);
+      if (isset($GeoBoxIcons[$t])) {
+        $result .= Keep(" <a href=\"$lnk\" target=\"_blank\"><img title=\"$t\" style=\"height:1.2em;vertical-align:middle\" src=\"$FarmPubDirUrl/geobox/${GeoBoxIcons[$t]}\" /></a>");
+      } else {
+        $result .= " [[$lnk | $t]]";
+      }
     }
   }
   

@@ -1,6 +1,6 @@
 >>recipeinfo<<
 Summary: Create links to various map sites from provided gps coordinates.
-Version: 2021-10-26
+Version: 2024-08-30
 Prerequisites: 
 Status: 
 Maintainer: [[~Anomen]]
@@ -17,7 +17,7 @@ Recipe creates links to various map sites from provided gps coordinates.
 
 [[#install]]
 !!Installation
-Download [[(Attach:)geobox.php]].
+Download and unpack [[(Attach:)geobox-2024-08-30.zip]].
 
 In config.php, add the following line:
 
@@ -77,6 +77,15 @@ You can modify list of links by changing @@$GeoBoxLinks@@ array.
 : add link :  @@SDVA($GeoBoxLinks,  array('title'=>'http://example.com/maps'));@@
 : replace list:  @@$GeoBoxLinks = array('title'=>'http://example.com/maps');@@
 
+You can also use @@$GeoBoxIcons@@ variable to use show icon instead of label. Images must be stored in pub/geobox folder.
+
+By default, icons are displayed, instead of service name. If you want to switch back to text labels use:
+[@
+ unset($GeoBoxIcons);
+@]
+
+
+
 In link address you can use these variables (prefixed by @@$@@ sign):
 : LAT : hemisphere N / S
 : N  : latitude
@@ -87,7 +96,7 @@ In link address you can use these variables (prefixed by @@$@@ sign):
 : NSig : sign for N (empty for north, - for south)
 : Nm : minutes of N (absolute value)
 : Nmi : minutes of N (absolute value, integer part only)
-: Ns : : seconds of N (absolute value)
+: Ns : seconds of N (absolute value)
 : Nsi : seconds of N (absolute value, integer part only)
 
 : LON : hemisphere E / W
@@ -112,16 +121,18 @@ In link address you can use these variables (prefixed by @@$@@ sign):
  $GeoBoxLinks = array('maps.google.com'=>'http://maps.google.com/?q=$N%20$E');
 @]
 
-* add link to mapquest.com
+* add link to mapquest.com, which will be displayed as an icon (you have to provide /pub/geobox/mapquest.png)
 
 [@
  include_once("$FarmD/cookbook/geobox.php");
  SDVA($GeoBoxLinks,  array('mapquest'=>'http://www.mapquest.com/?q=$N,$E&amp;zoom=15'));
+ SDVA($GeoBoxIcons,  array('mapquest'=>'mapquest.png'));
 @]
 
 
 [[#relnotes]]
 !! Change log / Release notes
+* 2024-08-30 - support icons
 * 2021-10-26 - update for PHP 8
 * 2016-01-13 - fixed compatibility with PHP 5.5
 * 2010-06-12 - added to PmWiki Cookbook
@@ -131,6 +142,10 @@ In link address you can use these variables (prefixed by @@$@@ sign):
 [[#seealso]]
 !! See also
 : git repository : https://github.com/anomen-s/pmwiki-recipes/tree/master/Geobox
+
+[[#todo]]
+!! ToDo
+add support for Wikipedia:Geo_URI
 
 !!!Links
 * http://transition.fcc.gov/mb/audio/bickel/sprong.html
