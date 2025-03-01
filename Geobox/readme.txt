@@ -145,7 +145,8 @@ In link address you can use these variables (prefixed by @@$@@ sign):
 
 [[#todo]]
 !! ToDo
-add support for Wikipedia:Geo_URI
+* add support for Wikipedia:Geo_URI
+* add support for Open Location Code
 
 !!!Links
 * http://transition.fcc.gov/mb/audio/bickel/sprong.html
