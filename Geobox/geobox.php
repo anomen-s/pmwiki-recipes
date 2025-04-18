@@ -15,7 +15,7 @@
 */
 
 
-$RecipeInfo['Geobox']['Version'] = '2024-08-30';
+$RecipeInfo['Geobox']['Version'] = '2025-04-18';
 
 Markup('geo','fulltext','/\(:geo\s+((?:[dmsDMS,.]+:\s+)?(?:[a-z]+=\S+\s+)*)?(.*?)\s*:\)/si',
     "geobox_markup");
@@ -229,7 +229,7 @@ function geobox_maps($param, $coords_param)
     }
     
     $params = geobox_parse_params($param);
-    $cformat = $params['format'];
+    $cformat = $params['format'] ?? null;
     
     if (!empty($params['azimuth']) || !empty($params['distance'])) {
         if (is_numeric($params['azimuth']) && is_numeric($params['distance'])) {
@@ -241,7 +241,7 @@ function geobox_maps($param, $coords_param)
     $c = geobox_convert_coords($c);
 
 	if (empty($cformat)) { 
-		$cformat = $GeoBoxDefaultFormat; 
+		$cformat = $GeoBoxDefaultFormat;
 	}
 	if (strpos($cformat, "s") !== false) {
 		$COORDS=geobox_build_link('$NSig$Ndi&#176;$Nmi\'$Ns" $ESig$Edi&#176;$Emi\'$Es"', $c);// DMS

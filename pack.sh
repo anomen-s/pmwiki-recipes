@@ -25,7 +25,7 @@ VERSION=2024-08-30
 TMP=$TMPD/geobox
 mkdir -p "$TMP/cookbook"  "$TMP/pub/geobox"
 cp Geobox/geobox.php "$TMP/cookbook"
-cp Geobox/icons/*.png "$TMP/pub/geobox"
+cp Geobox/pub/geobox/*.png "$TMP/pub/geobox"
 
 tar -c -v -z -f geobox-$VERSION.tgz -C  "$TMP/" cookbook pub
 
