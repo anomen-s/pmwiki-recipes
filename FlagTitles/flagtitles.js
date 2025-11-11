@@ -78,7 +78,21 @@ FlagTitles.labelFlag = function(flag) {
 FlagTitles.flagRegex = /([\u{1F1E6}-\u{1F1FF}]{2})/gu;
 
 
+FlagTitles.EXCLUDED_TAGS = new Set([
+    'textarea',
+    'script',
+    'style',
+    'template',
+    'svg',
+    'math'
+  ]);
+
 FlagTitles.processNode = function (node) {
+
+  if (node.nodeType === Node.ELEMENT_NODE && FlagTitles.EXCLUDED_TAGS.has(node.nodeName.toLowerCase())) {
+    return;
+  }
+
   // Replace flags in text nodes
   if (node.nodeType === Node.TEXT_NODE) {
     const replaced = node.textContent.replace(FlagTitles.flagRegex, FlagTitles.labelFlag);
