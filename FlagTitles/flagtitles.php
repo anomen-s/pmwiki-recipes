@@ -9,7 +9,7 @@
     (at your option) any later version.
 */
 
-$RecipeInfo['FlagTitles']['Version'] = '2025-11-09';
+$RecipeInfo['FlagTitles']['Version'] = '2025-12-01';
 
 
 SDV($HTMLStylesFmt['flagtitles'], "

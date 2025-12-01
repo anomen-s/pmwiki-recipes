@@ -49,7 +49,10 @@ FlagTitles.makeTooltip =  function(flag, code, country) {
       const suffixes = idd.suffixes?.length
         ? idd.suffixes.map(s => idd.root + s)
         : [idd.root];
-      prefixes = ", " + suffixes.join(", ");
+      const suffixesLimited = (suffixes.length > 4)
+        ? suffixes.slice(0, 4).concat("...")
+        : suffixes;
+      prefixes = ", " + suffixesLimited.join(", ");
     }
 
     return `${flag} ${name} [${code}${prefixes}]`;
