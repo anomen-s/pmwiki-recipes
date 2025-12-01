@@ -11,14 +11,14 @@
     (at your option) any later version.
 */
 
-$RecipeInfo['QRCode']['Version'] = '2021-10-25';
+$RecipeInfo['QRCode']['Version'] = '2025-12-01';
 
 SDV($PHPQRCODE_PATH, dirname(__FILE__) . "/phpqrcode");
 require_once($PHPQRCODE_PATH . "/phpqrcode.php");
 
 SDV($QR_ECLEVEL, QR_ECLEVEL_M);
 
-Markup('qrcode','inline','/\(:qr\s+(.*\S)\s*:\)/si',
+Markup('qrcode','<split','/\(:qr\s+(.*?)\s*:\)/si',
     "mu_QR");
 
 function mu_QR($m) {

@@ -56,6 +56,7 @@ Use qr markup
 !! Change log / Release notes
 * 2020-12-15 - initial release
 * 2021-10-25 - update for PHP 8
+* 2025-12-01 - fixed rexexp to handle spaces and multi-line texts
 
 [[#seealso]]
 !! See also
