@@ -41,7 +41,7 @@ FlagTitles.fetchIfNeeded = async function () {
 
 
 FlagTitles.makeTooltip =  function(flag, code, country) {
-    const name = country?.name?.common || flagToCode(flag);
+    const name = country?.name?.common || FlagTitles.flagToCode(flag);
     const idd = country?.idd;
     let prefixes = "";
 
