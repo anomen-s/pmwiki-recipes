@@ -22,7 +22,10 @@ Markup('qrcode','<split','/\(:qr\s+(.*?)\s*:\)/si',
     "mu_QR");
 
 function mu_QR($m) {
-  return Keep(qr_code_gen($m[1]));
+  # undo PmWiki's htmlspecialchars conversion
+  $block = str_replace(array('<:vspace>', '&lt;', '&gt;', '&amp;'),
+                         array('', '<', '>', '&'), $m[1]);
+  return Keep(qr_code_gen($block));
 }
 
 
