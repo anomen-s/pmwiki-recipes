@@ -52,7 +52,7 @@ FlagTitles.makeTooltip =  function(flag, code, country) {
       const suffixesLimited = (suffixes.length > 4)
         ? suffixes.slice(0, 4).concat("...")
         : suffixes;
-      prefixes = ", " + suffixesLimited.join(", ");
+      prefixes = ", \u260E" + suffixesLimited.join(", ");
     }
 
     return `${flag} ${name} [${code}${prefixes}]`;
