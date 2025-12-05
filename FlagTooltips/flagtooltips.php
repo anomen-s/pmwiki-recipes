@@ -12,7 +12,7 @@
 $RecipeInfo['FlagTooltips']['Version'] = '2025-12-05';
 
 
-SDV($HTMLStylesFmt['flagtitles'], "
+SDV($HTMLStylesFmt['flagtooltips'], "
 .flag-tooltip {
   cursor: help;
   border-bottom: 1px dotted #888;
@@ -26,7 +26,7 @@ SDV($HTMLStylesFmt['flagtitles'], "
 // by default use local countries.json if present
 SDV($FlagTooltipsUseLocal, is_file("$FarmD/pub/flagtooltips/countries.json"));
 
-$HTMLHeaderFmt['flagtitles'] = "
+$HTMLHeaderFmt['flagtooltips'] = "
 <script type=\"text/javascript\" src=\"\$PubDirUrl/flagtooltips/flagtooltips.js\"></script>
 
 <script type=\"text/javascript\">
