@@ -1,6 +1,6 @@
 <?php if (!defined('PmWiki')) exit();
 /*
-    FlagTitles
+    FlagTooltips
 
     Copyright 2025 Anomen (ludek_h@seznam.cz)
     This program is free software; you can redistribute it and/or modify
@@ -9,7 +9,7 @@
     (at your option) any later version.
 */
 
-$RecipeInfo['FlagTitles']['Version'] = '2025-12-01';
+$RecipeInfo['FlagTooltips']['Version'] = '2025-12-05';
 
 
 SDV($HTMLStylesFmt['flagtitles'], "
@@ -24,17 +24,17 @@ SDV($HTMLStylesFmt['flagtitles'], "
 ");
 
 // by default use local countries.json if present
-SDV($FlagTitlesUseLocal, is_file("$FarmD/pub/flagtitles/countries.json"));
+SDV($FlagTooltipsUseLocal, is_file("$FarmD/pub/flagtooltips/countries.json"));
 
 $HTMLHeaderFmt['flagtitles'] = "
-<script type=\"text/javascript\" src=\"\$PubDirUrl/flagtitles/flagtitles.js\"></script>
+<script type=\"text/javascript\" src=\"\$PubDirUrl/flagtooltips/flagtooltips.js\"></script>
 
 <script type=\"text/javascript\">
 // <![CDATA[
 document.addEventListener('DOMContentLoaded', () => {
-  FlagTitles.localURL = '\$FarmPubDirUrl/flagtitles/countries.json';
-  FlagTitles.localMode = '$FlagTitlesUseLocal';
-  FlagTitles.process();
+  FlagTooltips.localURL = '\$FarmPubDirUrl/flagtooltips/countries.json';
+  FlagTooltips.localMode = '$FlagTooltipsUseLocal';
+  FlagTooltips.process();
 });
 // ]]>
 </script>

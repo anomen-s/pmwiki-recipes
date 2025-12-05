@@ -1,12 +1,12 @@
 >>recipeinfo<<
 Summary: Show tool tips for flags in page.
-Version: 2025-11-09
+Version: 2025-12-05
 Prerequisites:
 Status:
 Maintainer: [[~Anomen]]
 License: LGPL
+Categories: [[!Markup]]
 Users: {$Users} ([[{$FullName}-Users|view]] / [[{$FullName}-Users?action=edit|edit]])
-Categories: [[Includes]]
 Discussion: [[{$Group}/{$Name}-Talk]]
 >><<
 !! Questions answered by this recipe
@@ -19,47 +19,48 @@ Recipe adds tooltip on all flags found in page text.
 
 [[#install]]
 !!Installation
-Download [[(Attach:)flagtitles.php]] and [[(Attach:)flagtitles.js]].
+Download [[(Attach:)flagtooltips.php]] and [[(Attach:)flagtooltips.js]].
 
 Then download [[https://restcountries.com/v3.1/all?fields=name,cca2,idd]]
 as @@countries.json@@.
 
-Store PHP file in @@cookbook/@@ and the rest in @@pub/flagtitles/@@.
+Store PHP file in @@cookbook/@@ and the rest in @@pub/flagtooltips/@@.
 
 In config.php, add the following line:
 
 [@
- include_once("$FarmD/cookbook/flagtitles.php");
+ include_once("$FarmD/cookbook/flagtooltips.php");
 @]
 
 
 [[#config]]
 !! Configuration
 [@
- $FlagTitlesUseLocal = false; // You can force downloading of country list from restcountries.com each time.
+ $FlagTooltipsUseLocal = false; // You can force downloading of country list from restcountries.com each time.
 @]
 
 [[#usage]]
 !!Usage
 
 Automatic, just insert flags into the text.
-You can use [[https://emojipedia.org/]] or similar service.
+You can use [[https://emojipedia.org/]] or similar service. Example:
 [@
 I have visited 🇩🇪 and 🇵🇱.
 @]
 
 
+[[#todo]]
+!! To do / some day / maybe
+* load countrylist.json only if any flag is found on the page
+* automatically fetch countrylist and cache it in wiki.d
+
 [[#relnotes]]
 !! Change log / Release notes
-* 2025-11-09 - initial release
-
-!!ToDos
-* load countrylist.json only if any flag is found
-* fetch countrylist and cache it in wiki.d
+* 2025-12-05 - initial release
 
 [[#seealso]]
 !! See also
-: git repository : https://github.com/anomen-s/pmwiki-recipes/tree/master/QRCode
+: git repository : https://github.com/anomen-s/pmwiki-recipes/tree/master/FlagTooltips
 * https://restcountries.com/
 
 [[#contributors]]

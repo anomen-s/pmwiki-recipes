@@ -1,47 +1,47 @@
-var FlagTitles = {};
+var FlagTooltips = {};
 
-FlagTitles.localMode = false;
-FlagTitles.localURL = '';
-FlagTitles.remoteURL = 'https://restcountries.com/v3.1/all?fields=name,cca2,idd';
+FlagTooltips.localMode = false;
+FlagTooltips.localURL = '';
+FlagTooltips.remoteURL = 'https://restcountries.com/v3.1/all?fields=name,cca2,idd';
 
-FlagTitles.flagToCode = function(flag) {
+FlagTooltips.flagToCode = function(flag) {
   return Array.from(flag)
     .map(ch => String.fromCharCode(ch.codePointAt(0) - 0x1F1E6 + 65))
     .join('');
 }
 
-FlagTitles.fetchFlags = async function () {
+FlagTooltips.fetchFlags = async function () {
   // Fetch all country codes and names
   let countryMap = {};
   try {
-    const res = await fetch(FlagTitles.localMode ? FlagTitles.localURL : FlagTitles.remoteURL);
+    const res = await fetch(FlagTooltips.localMode ? FlagTooltips.localURL : FlagTooltips.remoteURL);
     const countries = await res.json();
     countries.forEach(c => {
       if (c.cca2 && c.name?.common) {
         countryMap[c.cca2.toUpperCase()] = c;
       }
     });
-    FlagTitles.countryMap = countryMap;
+    FlagTooltips.countryMap = countryMap;
     return countryMap;
   } catch (err) {
     console.error("Failed to load country list:", err);
   }
 }
 
-FlagTitles.fetchIfNeeded = async function () {
-   if (!FlagTitles.countryMap) {
+FlagTooltips.fetchIfNeeded = async function () {
+   if (!FlagTooltips.countryMap) {
      console.log("No country map");
-     FlagTitles.fetchFlags().then(data => {});
+     FlagTooltips.fetchFlags().then(data => {});
      console.log("No country map");
    }
-   console.log("Fetch result failed: " + (FlagTitles.countryMap == null));
-   return FlagTitles.countryMap;
+   console.log("Fetch result failed: " + (FlagTooltips.countryMap == null));
+   return FlagTooltips.countryMap;
 }
 
 
 
-FlagTitles.makeTooltip =  function(flag, code, country) {
-    const name = country?.name?.common || FlagTitles.flagToCode(flag);
+FlagTooltips.makeTooltip =  function(flag, code, country) {
+    const name = country?.name?.common || FlagTooltips.flagToCode(flag);
     const idd = country?.idd;
     let prefixes = "";
 
@@ -59,29 +59,29 @@ FlagTitles.makeTooltip =  function(flag, code, country) {
 }
 
 
-FlagTitles.labelFlag = function(flag) {
+FlagTooltips.labelFlag = function(flag) {
 
-  //if (!FlagTitles.fetchIfNeeded()) {
+  //if (!FlagTooltips.fetchIfNeeded()) {
   //    console.log("Fetching at: " + flag);
   //    return flag;
   //}
   //console.log("Processing " + flag);
-  const code = FlagTitles.flagToCode(flag);
-  const country = FlagTitles.countryMap[code]
+  const code = FlagTooltips.flagToCode(flag);
+  const country = FlagTooltips.countryMap[code]
   
   // Create span with tooltip + style class
   const span = document.createElement('span');
   span.textContent = flag;
-  span.title = FlagTitles.makeTooltip(flag, code, country);
+  span.title = FlagTooltips.makeTooltip(flag, code, country);
   span.className = 'flag-tooltip';
   return span.outerHTML;
 }
 
 // Regex to detect two Regional Indicator Symbols (flags)
-FlagTitles.flagRegex = /([\u{1F1E6}-\u{1F1FF}]{2})/gu;
+FlagTooltips.flagRegex = /([\u{1F1E6}-\u{1F1FF}]{2})/gu;
 
 
-FlagTitles.EXCLUDED_TAGS = new Set([
+FlagTooltips.EXCLUDED_TAGS = new Set([
     'textarea',
     'script',
     'style',
@@ -90,28 +90,28 @@ FlagTitles.EXCLUDED_TAGS = new Set([
     'math'
   ]);
 
-FlagTitles.processNode = function (node) {
+FlagTooltips.processNode = function (node) {
 
-  if (node.nodeType === Node.ELEMENT_NODE && FlagTitles.EXCLUDED_TAGS.has(node.nodeName.toLowerCase())) {
+  if (node.nodeType === Node.ELEMENT_NODE && FlagTooltips.EXCLUDED_TAGS.has(node.nodeName.toLowerCase())) {
     return;
   }
 
   // Replace flags in text nodes
   if (node.nodeType === Node.TEXT_NODE) {
-    const replaced = node.textContent.replace(FlagTitles.flagRegex, FlagTitles.labelFlag);
+    const replaced = node.textContent.replace(FlagTooltips.flagRegex, FlagTooltips.labelFlag);
     if (replaced !== node.textContent) {
       const span = document.createElement('span');
       span.innerHTML = replaced;
       node.replaceWith(span);
     }
   } else {
-    node.childNodes.forEach(FlagTitles.processNode);
+    node.childNodes.forEach(FlagTooltips.processNode);
   }
 }
 
-FlagTitles.process = function() {
+FlagTooltips.process = function() {
   const el = document.getElementById('wikitext');
   if (el) {
-    FlagTitles.fetchFlags().then(data => {FlagTitles.processNode(el); });
+    FlagTooltips.fetchFlags().then(data => {FlagTooltips.processNode(el); });
   }
 }
