@@ -6,7 +6,7 @@ Status:
 Maintainer: [[~Anomen]]
 License: LGPL
 Users: {$Users} ([[{$FullName}-Users|view]] / [[{$FullName}-Users?action=edit|edit]])
-Categories: [[Images]]
+Categories: [[!Images]]
 Discussion: [[{$Group}/{$Name}-Talk]]
 >><<
 !! Questions answered by this recipe
@@ -56,7 +56,7 @@ Use qr markup
 !! Change log / Release notes
 * 2020-12-15 - initial release
 * 2021-10-25 - update for PHP 8
-* 2025-12-01 - fixed rexexp to handle spaces and multi-line texts
+* 2025-12-01 - fixed regexp to handle spaces and multi-line texts
 
 [[#seealso]]
 !! See also
@@ -67,7 +67,7 @@ Use qr markup
 [[#contributors]]
 !! Contributors
 * [[~Anomen]] (original author)
-  
+
 [[#comments]]
 !! Comments
 See discussion at [[{$Group}/{$Name}-Talk]]

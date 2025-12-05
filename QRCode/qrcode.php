@@ -4,7 +4,7 @@
     QRCode script adds support for generating qr codes.
     - add (:qrcode text:) tag functionality
 
-    Copyright 2020-2021 Anomen (ludek_h@seznam.cz)
+    Copyright 2020-2025 Anomen (ludek_h@seznam.cz)
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
     by the Free Software Foundation; either version 2 of the License, or
