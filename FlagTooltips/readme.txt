@@ -19,12 +19,10 @@ Recipe adds tooltip on all flags found in page text.
 
 [[#install]]
 !!Installation
-Download [[(Attach:)flagtooltips.php]] and [[(Attach:)flagtooltips.js]].
+Download [[(Attach:)flagtooltips.zip]].
 
-Then download [[https://restcountries.com/v3.1/all?fields=name,cca2,idd]]
-as @@countries.json@@.
-
-Store PHP file in @@cookbook/@@ and the rest in @@pub/flagtooltips/@@.
+You can also download up-to-date county list [[https://restcountries.com/v3.1/all?fields=name,cca2,idd]].
+and store it as @@pub/flagtooltips/countries.json@@.
 
 In config.php, add the following line:
 
@@ -43,10 +41,10 @@ In config.php, add the following line:
 !!Usage
 
 Automatic, just insert flags into the text.
-You can use [[https://emojipedia.org/]] or similar service. Example:
-[@
-I have visited 🇩🇪 and 🇵🇱.
-@]
+You can use [[https://emojipedia.org/]] or similar service.
+
+Example:
+-> Attach:flagtooltips-screenshot.png"Example"
 
 
 [[#todo]]
