@@ -49,7 +49,6 @@ Example:
 
 [[#todo]]
 !! To do / some day / maybe
-* load countrylist.json only if any flag is found on the page
 * automatically fetch countrylist and cache it in wiki.d
 
 [[#relnotes]]

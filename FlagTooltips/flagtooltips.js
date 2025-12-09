@@ -28,18 +28,6 @@ FlagTooltips.fetchFlags = async function () {
   }
 }
 
-FlagTooltips.fetchIfNeeded = async function () {
-   if (!FlagTooltips.countryMap) {
-     console.log("No country map");
-     FlagTooltips.fetchFlags().then(data => {});
-     console.log("No country map");
-   }
-   console.log("Fetch result failed: " + (FlagTooltips.countryMap == null));
-   return FlagTooltips.countryMap;
-}
-
-
-
 FlagTooltips.makeTooltip =  function(flag, code, country) {
     const name = country?.name?.common || FlagTooltips.flagToCode(flag);
     const idd = country?.idd;
@@ -58,13 +46,8 @@ FlagTooltips.makeTooltip =  function(flag, code, country) {
     return `${flag} ${name} [${code}${prefixes}]`;
 }
 
-
 FlagTooltips.labelFlag = function(flag) {
 
-  //if (!FlagTooltips.fetchIfNeeded()) {
-  //    console.log("Fetching at: " + flag);
-  //    return flag;
-  //}
   //console.log("Processing " + flag);
   const code = FlagTooltips.flagToCode(flag);
   const country = FlagTooltips.countryMap[code]
@@ -80,7 +63,6 @@ FlagTooltips.labelFlag = function(flag) {
 // Regex to detect two Regional Indicator Symbols (flags)
 FlagTooltips.flagRegex = /([\u{1F1E6}-\u{1F1FF}]{2})/gu;
 
-
 FlagTooltips.EXCLUDED_TAGS = new Set([
     'textarea',
     'script',
@@ -90,28 +72,49 @@ FlagTooltips.EXCLUDED_TAGS = new Set([
     'math'
   ]);
 
-FlagTooltips.processNode = function (node) {
+FlagTooltips.escapeChars = function (str) {
+    const tempElement = document.createElement('div');
+    tempElement.textContent = str;
+    return tempElement.innerHTML;
+}
+
+FlagTooltips.processNode = function (node, onlyScan) {
 
   if (node.nodeType === Node.ELEMENT_NODE && FlagTooltips.EXCLUDED_TAGS.has(node.nodeName.toLowerCase())) {
-    return;
+    return false;
   }
 
-  // Replace flags in text nodes
   if (node.nodeType === Node.TEXT_NODE) {
-    const replaced = node.textContent.replace(FlagTooltips.flagRegex, FlagTooltips.labelFlag);
-    if (replaced !== node.textContent) {
+    if (FlagTooltips.flagRegex.test(node.textContent)) {
+      if (onlyScan) {
+        return true;
+      }
+      const txt = FlagTooltips.escapeChars(node.textContent);
+      // Replace flags in text nodes
+      const replaced = txt.replace(FlagTooltips.flagRegex, FlagTooltips.labelFlag);
       const span = document.createElement('span');
       span.innerHTML = replaced;
       node.replaceWith(span);
     }
   } else {
-    node.childNodes.forEach(FlagTooltips.processNode);
+    for (let child of node.childNodes) {
+      const f = FlagTooltips.processNode(child, onlyScan);
+      if (onlyScan && f) {
+       return true;
+      }
+    }
   }
+  return false;
 }
 
-FlagTooltips.process = function() {
+FlagTooltips.doProcess = async function() {
   const el = document.getElementById('wikitext');
   if (el) {
-    FlagTooltips.fetchFlags().then(data => {FlagTooltips.processNode(el); });
+    const doUpdate = FlagTooltips.processNode(el, true);
+    if (doUpdate) {
+     //console.log("Flag(s) found: " + doUpdate);
+     await FlagTooltips.fetchFlags();
+     FlagTooltips.processNode(el, false);
+    }
   }
 }

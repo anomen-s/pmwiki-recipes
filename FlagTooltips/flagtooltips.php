@@ -9,7 +9,7 @@
     (at your option) any later version.
 */
 
-$RecipeInfo['FlagTooltips']['Version'] = '2025-12-05';
+$RecipeInfo['FlagTooltips']['Version'] = '2025-12-09';
 
 
 SDV($HTMLStylesFmt['flagtooltips'], "
@@ -31,10 +31,10 @@ $HTMLHeaderFmt['flagtooltips'] = "
 
 <script type=\"text/javascript\">
 // <![CDATA[
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async (event) => {
   FlagTooltips.localURL = '\$FarmPubDirUrl/flagtooltips/countries.json';
   FlagTooltips.localMode = '$FlagTooltipsUseLocal';
-  FlagTooltips.process();
+  FlagTooltips.doProcess();
 });
 // ]]>
 </script>
